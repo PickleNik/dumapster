@@ -13,7 +13,7 @@
     <div class="flex rounded-3xl overflow-hidden gap-2 flex-wrap max-w-96">
       <div class="w-36 text-neutral-600 font-bold flex flex-col gap-2">
         <div
-          class="h-24 flex items-center justify-end"
+          class="h-16 flex items-center justify-end"
           v-for="t in ['8', '9', '10', '11', '12', '1', '2', '3', '4']"
         >
           {{ t }}
@@ -22,7 +22,7 @@
       <div v-for="d in ['m', 't', 'w', 'r', 'f']" class="flex flex-col gap-2">
         <div
           v-for="t in ['8', '9', '10', '11', '12', '1', '2', '3', '4']"
-          class="hover:bg-neutral-700 duration-300 cursor-pointer w-36 h-24 rounded-xl bg-gray-200 dark:bg-neutral-800"
+          class="hover:bg-neutral-700 duration-300 cursor-pointer w-36 h-16 rounded-xl bg-gray-200 dark:bg-neutral-800"
         ></div>
       </div>
     </div>
