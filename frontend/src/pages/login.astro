@@ -1,12 +1,16 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ReactLogin from '../components/ReactLogin.jsx'
+import LoginQuiz from '../components/LoginQuiz.vue'
 ---
 
 <Layout title="Welcome to Astro.">
 	<main>
-		<h1>Login Page</h1>
-    <ReactLogin client:load />
+		<h1 class="text-4xl font-black text-orange-500">Login Page</h1>
+		<div class="text-blue-300 bg-blue-950 m-8 p-24 rounded-3xl">
+			<ReactLogin client:load />
+		</div>
+		<LoginQuiz />
 	</main>
 </Layout>
 
