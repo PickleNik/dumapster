@@ -8,11 +8,11 @@
     />
     <div
       v-if="query"
-      class="flex absolute right-4 top-18 max-h-[80vh] overflow-y-auto flex-col bg-neutral-900 rounded-xl gap-2 overflow-hidden border border-neutral-400"
+      class="flex absolute right-4 top-18 max-h-[80vh] overflow-y-auto flex-col bg-neutral-700 rounded-xl gap-[1px] overflow-hidden border border-neutral-700"
     >
       <button
         v-for="course in courses.filter((c) => c.type == 'course')"
-        class="bg-neutral-800 text-neutral-300 rounded-lg p-3 cursor-pointer hover:bg-neutral-700 active:bg-neutral-600"
+        class="bg-neutral-800 text-neutral-300 rounded-lg p-3 cursor-pointer hover:bg-neutral-900 active:bg-neutral-500"
         @click="addClass(course)"
       >
         {{ course.name }}
