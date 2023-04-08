@@ -138,7 +138,7 @@ watch($classes, async () => {
     const response2 = await fetch(
       `https://planetterp.com/api/v1/grades?course=${$classes.value[i].name}`
     );
-    console.log(await response2.json());
+    // console.log(await response2.json());
     classesDetailed.value = [...classesDetailed.value, await response.json()];
   }
 });
@@ -472,15 +472,15 @@ let friday = ref([
   },
 ]);
 
-setTimeout(() => {
-  console.log([
-    monday.value,
-    tuesday.value,
-    wednesday.value,
-    thursday.value,
-    friday.value,
-  ]);
-}, 5000);
+// setTimeout(() => {
+//   console.log([
+//     monday.value,
+//     tuesday.value,
+//     wednesday.value,
+//     thursday.value,
+//     friday.value,
+//   ]);
+// }, 5000);
 </script>
 
 <style>

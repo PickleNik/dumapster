@@ -12,13 +12,33 @@ import Schedule from '../components/schedule.vue';
 // 	console.log(courses);
 // }
 
-const courses = await fetch('https://api.umd.io/v0/courses/list?semester=202308');
-console.log( await courses.json());
+// const courses = await fetch('https://api.umd.io/v0/courses/list?semester=202308');
+// console.log( await courses.json());
 
 
-const response2 = await fetch('https://api.umd.io/v0/courses/cmsc131?expand=sections?start_time>=12pm');
-const courses2 = await response2.json();
-console.log(courses2);
+const response2 = await fetch('https://api.umd.io/v0/courses/cmsc131?expand=sections').then(
+	(response) => {
+		if (response.ok) {
+			return response.json();
+		} else {
+			throw new Error('Something went wrong');
+		}
+	}
+).catch(e => console.log(e));
+// const courses2 = await response2.json();
+console.log(response2);
+
+const response3 = await fetch('https://api.umd.io/v0/courses/CMSC131/sections?start_time>=12pm').then(
+	(response) => {
+		if (response.ok) {
+			return response.json();
+		} else {
+			throw new Error('Something went wrong');
+		}
+	}
+).catch(e => console.log(e));
+// const courses3 = await response3.json();
+console.log(response3);
 </script>
 
 <Layout title="Welcome to Astro.">
