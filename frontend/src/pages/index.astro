@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Search from '../components/search.vue';
 import Schedule from '../components/schedule.vue';
-
+import ClassList from '../components/classList.vue';
 ---
 
 <script>
@@ -26,7 +26,13 @@ import Schedule from '../components/schedule.vue';
 			<h1><span class="text-gradient">Schedule</span></h1>
 			<Search client:load />
 		</div>
-		<Schedule client:load />
+		<div class="flex">
+			<Schedule client:load />
+			<aside class="dark:text-white">
+				<span class="font-mono text-neutral-400 pl-4">preferred classes: </span>
+				<ClassList client:load />
+			</aside>
+		</div>
 	</main>
 </Layout>
 
