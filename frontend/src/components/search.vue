@@ -34,12 +34,8 @@ let courses = ref([]);
 
 function addClass(course) {
   let dup = false;
-  for (let i in $classes.value) {
-    if ({ ...$classes.value[i] }.name === course.name) {
-      dup = true;
-      return;
-    }
-  }
+  for (let i in $classes.value)
+    if ({ ...$classes.value[i] }.name === course.name) dup = true;
 
   if (!dup) classes.set([...$classes.value, course]);
 }
