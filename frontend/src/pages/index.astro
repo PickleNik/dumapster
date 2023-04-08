@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Search from '../components/search.vue';
 import Schedule from '../components/schedule.vue';
+
 ---
 
 <script>
@@ -11,9 +12,11 @@ import Schedule from '../components/schedule.vue';
 // 	const courses = await response.json();
 // 	console.log(courses);
 // }
-const response2 = await fetch('https://api.umd.io/v0/courses/list');
-const courses2 = await response2.json();
-console.log(courses2);
+
+
+// const response2 = await fetch('https://api.umd.io/v0/courses/list');
+// const courses2 = await response2.json();
+// console.log(courses2);
 </script>
 
 <Layout title="Welcome to Astro.">
@@ -23,7 +26,7 @@ console.log(courses2);
 			<h1><span class="text-gradient">Schedule</span></h1>
 			<Search client:load />
 		</div>
-		<Schedule />
+		<Schedule client:load />
 	</main>
 </Layout>
 

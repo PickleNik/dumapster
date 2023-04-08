@@ -10,6 +10,9 @@ dependencies:
   '@astrojs/vue':
     specifier: ^2.1.1
     version: 2.1.1(@babel/core@7.21.4)(astro@2.2.1)(vite@4.2.1)(vue@3.2.47)
+  '@nanostores/vue':
+    specifier: ^0.7.0
+    version: 0.7.0(nanostores@0.7.4)(vue@3.2.47)
   '@types/react':
     specifier: ^18.0.21
     version: 18.0.33
@@ -19,6 +22,9 @@ dependencies:
   astro:
     specifier: ^2.2.1
     version: 2.2.1
+  nanostores:
+    specifier: ^0.7.4
+    version: 0.7.4
   react:
     specifier: ^18.0.0
     version: 18.2.0
@@ -734,6 +740,21 @@ packages:
 
   /@ljharb/has-package-exports-patterns@0.0.2:
     resolution: {integrity: sha512-4/RWEeXDO6bocPONheFe6gX/oQdP/bEpv0oL4HqjPP5DCenBSt0mHgahppY49N0CpsaqffdwPq+TlX9CYOq2Dw==}
+    dev: false
+
+  /@nanostores/vue@0.7.0(nanostores@0.7.4)(vue@3.2.47):
+    resolution: {integrity: sha512-xQiiMlj0dFTAgjxXahPQQcGit7HpTo/lHKwAXg8yRyC6IkoB55tCsRBbAouMLSB4bdBoCgCmuKWcv7MRX1t9Zw==}
+    engines: {node: ^14.0.0 || ^16.0.0 || >=18.0.0}
+    peerDependencies:
+      '@vue/devtools-api': '>=6.1.4'
+      nanostores: '>=0.7.3'
+      vue: '>=3.2.30'
+    peerDependenciesMeta:
+      '@vue/devtools-api':
+        optional: true
+    dependencies:
+      nanostores: 0.7.4
+      vue: 3.2.47
     dev: false
 
   /@nodelib/fs.scandir@2.1.5:
@@ -2541,6 +2562,11 @@ packages:
     resolution: {integrity: sha512-BGcqMMJuToF7i1rt+2PWSNVnWIkGCU78jBG3RxO/bZlnZPK2Cmi2QaffxGO/2RvWi9sL+FAiRiXMgsyxQ1DIDA==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
+    dev: false
+
+  /nanostores@0.7.4:
+    resolution: {integrity: sha512-MBeUVt7NBcXqh7AGT+KSr3O0X/995CZsvcP2QEMP+PXFwb07qv3Vjyq+EX0yS8f12Vv3Tn2g/BvK/OZoMhJlOQ==}
+    engines: {node: ^14.0.0 || ^16.0.0 || >=18.0.0}
     dev: false
 
   /nlcst-to-string@3.1.1:
