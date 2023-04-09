@@ -9,7 +9,5 @@ const prisma = new PrismaClient();
 const users = await prisma.curr_classes2.findMany();
 
 export default (request) => {
-  return new Response(
-    `Hello, from ${request.url} I'm now an Edge Function!, ${users}`
-  );
+  return new Response(`Hello, from ${request.url} I'm now an Edge Function!`);
 };
