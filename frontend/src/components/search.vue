@@ -48,19 +48,18 @@ watch(query, async () => {
       ""
     )}`
   );
-  // const response2 = await fetch(
-  //   `http://localhost:8000/NLP?query=${query.value.replace(/\s/g, "")}`,
-  //   // no-cors
+  const response2 = await fetch(
+    `http://localhost:8000/NLP?query=${query.value.replace(/\s/g, "")}`,
+    // no-cors
 
-  //   {
-  //     method: "GET",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       "Access-Control-Allow-Origin": "no-cors",
-  //     },
-  //   }
-  // );
-  // const array = await response2.json();
-  courses = await response.json();
+  );
+  const array1 = await response2.json();
+  const array2 = await response.json();
+  if(array2.length = 0){
+    courses = array1
+  }
+  else{
+    courses = array2;
+  }
 });
 </script>
