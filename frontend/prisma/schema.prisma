@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "cockroachdb"
+  url      = env("DATABASE_URL")
+}
+
+model curr_classes {
+  id          BigInt   @id @default(autoincrement())
+  time_id     String?
+  course      String?
+  sid         String?
+  seats       String[]
+  meetings    String[]
+  open_seats  String?
+  waitlist    String?
+  instructors String[]
+}
+
+model nlp {
+  id          BigInt   @id @default(autoincrement())
+  department  String?
+  cid         String?
+  description String?
+  reviews     String[]
+}
+
+model table1 {
+  id         BigInt  @id @default(autoincrement())
+  department String?
+}
+
+model table2 {
+  id         BigInt  @id @default(autoincrement())
+  department String?
+}
+
+model table3 {
+  id         BigInt  @id @default(autoincrement())
+  department String?
+}
+
+model table4 {
+  id          BigInt   @id @default(autoincrement())
+  department  String?
+  cid         String?
+  description String?
+  reviews     String[]
+}
+
+model ttable1 {
+  id         BigInt  @id @default(autoincrement())
+  department String?
+}
+
+model curr_classes2 {
+  id          BigInt   @id @default(autoincrement())
+  time_id     String?
+  course      String?
+  sid         String?
+  seats       String?
+  meetings    String[]
+  open_seats  String?
+  waitlist    String?
+  instructors String[]
+}
