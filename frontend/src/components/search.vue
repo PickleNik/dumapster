@@ -48,6 +48,19 @@ watch(query, async () => {
       ""
     )}`
   );
+  // const response2 = await fetch(
+  //   `http://localhost:8000/NLP?query=${query.value.replace(/\s/g, "")}`,
+  //   // no-cors
+
+  //   {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "Access-Control-Allow-Origin": "no-cors",
+  //     },
+  //   }
+  // );
+  // const array = await response2.json();
   courses = await response.json();
 });
 </script>

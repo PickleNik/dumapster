@@ -14,7 +14,7 @@
       <div class="text-neutral-600 font-bold flex flex-col gap-2">
         <div
           class="h-16 flex items-center justify-end"
-          v-for="t in ['8', '9', '10', '11', '12', '1', '2', '3', '4']"
+          v-for="t in ['8', '9', '10', '11', '12', '1', '2', '3', '4', '5']"
         >
           {{ t }}
         </div>
@@ -25,7 +25,7 @@
       >
         <div
           v-for="t in d"
-          class="dark:hover:bg-neutral-700 hover:bg-neutral-300 cursor-pointer w-36 h-16 rounded-xl bg-neutral-200 dark:bg-neutral-800"
+          class="dark:hover:bg-neutral-700 hover:bg-neutral-300 cursor-pointer w-36 h-16 rounded-xl bg-neutral-200 dark:bg-neutral-800 flex flex-wrap"
           :class="`hover:${allowing ? 'bg-green-300' : 'bg-red-300'} ${
             t.blocked ? 'blocked' : ''
           } ${t.allowed ? 'allowed' : ''}`"
@@ -34,7 +34,14 @@
               ? ((t.blocked = !t.blocked), (t.allowed = false))
               : ((t.allowed = !t.allowed), (t.blocked = false))
           "
-        ></div>
+        >
+          <div
+            class="bg-amber-600 p-1 text-black m-[1px] rounded-lg text-xs"
+            v-for="section in t.sections"
+          >
+            {{ section.substring(section.length - 4, section.length) }}
+          </div>
+        </div>
       </div>
     </div>
     <div class="flex pl-8 pt-4">
@@ -137,9 +144,106 @@ watch($classes, async () => {
     const response = await fetch(
       `https://planetterp.com/api/v1/course?name=${$classes.value[i].name}`
     );
-    const response2 = await fetch(
-      `https://planetterp.com/api/v1/grades?course=${$classes.value[i].name}`
-    );
+    let url = `https://api.umd.io/v0/courses/${$classes.value[i].name}/sections`;
+    const response3 = await fetch(url)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("Something went wrong");
+        }
+      })
+      .catch((e) => console.log(e));
+    // const courses3 = await response3.json();
+    // console.log(response3);
+    console.log(response3);
+    let blocked_sections = [];
+    response3.forEach((response) => {
+      response.meetings.forEach((meeting) => {
+        console.log(meeting);
+        if (meeting.days.includes("M")) {
+          let time = meeting.start_time;
+          monday.value.forEach((hour) => {
+            if (hour.blocked) {
+              blocked_sections = [...blocked_sections, response.section_id];
+              console.log(response.section_id);
+            }
+            console.log(blocked_sections.includes(response.section_id));
+            if (
+              hour.time.match(/\d+/)[0] == time.match(/\d+/)[0] &&
+              !blocked_sections.includes(response.section_id)
+            ) {
+              hour.sections = [...hour.sections, response.section_id];
+            }
+          });
+        }
+        if (meeting.days.includes("Tu")) {
+          let time = meeting.start_time;
+          tuesday.value.forEach((hour) => {
+            if (hour.blocked) {
+              blocked_sections = [...blocked_sections, response.section_id];
+              console.log(response.section_id);
+            }
+            console.log(blocked_sections.includes(response.section));
+            if (
+              hour.time.match(/\d+/)[0] == time.match(/\d+/)[0] &&
+              !blocked_sections.includes(response.section_id)
+            ) {
+              hour.sections = [...hour.sections, response.section_id];
+            }
+          });
+        }
+        if (meeting.days.includes("W")) {
+          let time = meeting.start_time;
+          wednesday.value.forEach((hour) => {
+            if (hour.blocked) {
+              blocked_sections = [...blocked_sections, response.section_id];
+              console.log(response.section_id);
+            }
+            console.log(blocked_sections.includes(response.section));
+            if (
+              hour.time.match(/\d+/)[0] == time.match(/\d+/)[0] &&
+              !blocked_sections.includes(response.section_id)
+            ) {
+              hour.sections = [...hour.sections, response.section_id];
+            }
+          });
+        }
+        if (meeting.days.includes("Th")) {
+          let time = meeting.start_time;
+          thursday.value.forEach((hour) => {
+            if (hour.blocked) {
+              blocked_sections = [...blocked_sections, response.section_id];
+              console.log(response.section_id);
+            }
+            console.log(blocked_sections.includes(response.section));
+            if (
+              hour.time.match(/\d+/)[0] == time.match(/\d+/)[0] &&
+              !blocked_sections.includes(response.section_id)
+            ) {
+              // hour.courses[$classes.value[i].name] = true;
+              hour.sections = [...hour.sections, response.section_id];
+            }
+          });
+          if (meeting.days.includes("F")) {
+            let time = meeting.start_time;
+            friday.value.forEach((hour) => {
+              if (hour.blocked) {
+                blocked_sections = [...blocked_sections, response.section_id];
+                console.log(response.section_id);
+              }
+              console.log(blocked_sections.includes(response.section));
+              if (
+                hour.time.match(/\d+/)[0] == time.match(/\d+/)[0] &&
+                !blocked_sections.includes(response.section_id)
+              ) {
+                hour.sections = [...hour.sections, response.section_id];
+              }
+            });
+          }
+        }
+      });
+    });
     // console.log(await response2.json());
     classesDetailed.value = [...classesDetailed.value, await response.json()];
   }
@@ -151,64 +255,71 @@ const allowing = ref(true);
 let monday = ref([
   {
     time: "8am",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "9am",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "10am",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "11am",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "12pm",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "1pm",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "2pm",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "3pm",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "4pm",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
+    blocked: false,
+    allowed: false,
+  },
+  {
+    time: "5pm",
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
@@ -216,64 +327,71 @@ let monday = ref([
 let tuesday = ref([
   {
     time: "8am",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "9am",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "10am",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "11am",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "12pm",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "1pm",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "2pm",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "3pm",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "4pm",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
+    blocked: false,
+    allowed: false,
+  },
+  {
+    time: "5pm",
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
@@ -281,64 +399,71 @@ let tuesday = ref([
 let wednesday = ref([
   {
     time: "8am",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "9am",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "10am",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "11am",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "12pm",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "1pm",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "2pm",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "3pm",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "4pm",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
+    blocked: false,
+    allowed: false,
+  },
+  {
+    time: "5pm",
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
@@ -346,64 +471,71 @@ let wednesday = ref([
 let thursday = ref([
   {
     time: "8am",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "9am",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "10am",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "11am",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "12pm",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "1pm",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "2pm",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "3pm",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "4pm",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
+    blocked: false,
+    allowed: false,
+  },
+  {
+    time: "5pm",
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
@@ -411,64 +543,71 @@ let thursday = ref([
 let friday = ref([
   {
     time: "8am",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "9am",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "10am",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "11am",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "12pm",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "1pm",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "2pm",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "3pm",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
   {
     time: "4pm",
-    courses: {},
-    sections: {},
+    course: null,
+    sections: [],
+    blocked: false,
+    allowed: false,
+  },
+  {
+    time: "5pm",
+    course: null,
+    sections: [],
     blocked: false,
     allowed: false,
   },
