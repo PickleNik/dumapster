@@ -7,8 +7,9 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 // use `prisma` in your application to read and write data in your DB
 const users = await prisma.curr_classes2.findMany();
-console.log(users);
 
 export default (request) => {
-  return new Response(`Hello, from ${request.url} I'm now an Edge Function!`);
+  return new Response(
+    `Hello, from ${request.url} I'm now an Edge Function!, ${users}`
+  );
 };
