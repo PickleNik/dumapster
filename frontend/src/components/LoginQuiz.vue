@@ -1,5 +1,9 @@
 
 <script setup>
+import { ref } from 'vue'
+
+let dropDown = ref(false);
+
 const majors = await fetch('https://api.umd.io/v0/majors');
     const majorsJson = await majors.json();
     console.log(majorsJson);
@@ -10,6 +14,8 @@ const majors = await fetch('https://api.umd.io/v0/majors');
 
     const isCommuter = false;
 
+
+
 </script>
 
 <template>
@@ -17,6 +23,12 @@ const majors = await fetch('https://api.umd.io/v0/majors');
   <div class="bg-gray-800 m-8 rounded-3xl p-24 justify-items-center">
     <div class="flex flex-col items-center">
     <h2 class="text-3xl font-black text-white text-center">What is your major?</h2>
+    <div class="relative">
+      <input atclick="dropDown = !dropDown">
+      <div v-if = "dropDown" class="absolute top-8 bg-white w-full">
+        test
+      </div>
+    </div>
 
 </div>
     <div class="flex flex-col items-center">
@@ -31,3 +43,4 @@ const majors = await fetch('https://api.umd.io/v0/majors');
 
 <style scoped>
 </style>
+
