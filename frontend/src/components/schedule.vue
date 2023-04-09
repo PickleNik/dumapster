@@ -124,6 +124,8 @@
 import { classes } from "../classStore";
 import { useStore } from "@nanostores/vue";
 import { ref, watch } from "vue";
+// import prisma from "../../lib/prisma";
+// console.log(await prisma.curr_classes2.findFirst());
 
 // read the store value with the `useStore` hook
 const $classes = useStore(classes);
