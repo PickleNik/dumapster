@@ -1,16 +1,16 @@
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 let dropDown = ref(false);
+let filter = ref('');
+watch(filter, async () => {
+console.log
+});
 
 const majors = await fetch('https://api.umd.io/v0/majors');
     const majorsJson = await majors.json();
     console.log(majorsJson);
-
-    const majorsList = majorsJson.map((major) => {
-      return major.major_name;
-    });
 
     const isCommuter = false;
 
@@ -24,9 +24,11 @@ const majors = await fetch('https://api.umd.io/v0/majors');
     <div class="flex flex-col items-center">
     <h2 class="text-3xl font-black text-white text-center">What is your major?</h2>
     <div class="relative">
-      <input atclick="dropDown = !dropDown">
-      <div v-if = "dropDown" class="absolute top-8 bg-white w-full">
-        test
+      <input v-model="filter" @click="dropDown = !dropDown">
+      <div v-if = "dropDown" class="absolute top-8 bg-white w-full max-h-[50vh] overflow-auto z-50">
+        <div v-for="major in majorsJson">
+          {{ major.name }}
+        </div>
       </div>
     </div>
 
